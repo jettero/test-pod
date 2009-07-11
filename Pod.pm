@@ -1,7 +1,24 @@
+package Test::Pod::_parser;
+use base 'Pod::Simple';
+use strict;
+
+sub _handle_element_start {
+    my($parser, $element_name, $attr_hash_r) = @_;
+
+    return $parser->SUPER::_handle_element_start(@_);
+}
+
+sub _handle_element_end {
+    my($parser, $element_name) = @_;
+
+    return $parser->SUPER::_handle_element_end(@_);
+}
+
+1;
+
 package Test::Pod;
 
 use strict;
-use File::Slurp ();
 
 =head1 NAME
 
@@ -65,7 +82,6 @@ C<Pod::Simple> to do the heavy lifting.
 
 use 5.008;
 
-use Pod::Simple;
 use Test::Builder;
 use File::Spec;
 
@@ -86,17 +102,6 @@ sub import {
 
 sub _additional_test_pod_specific_checks {
     my ($ok, $errata, $file) = @_;
-    my @entire_file = File::Slurp::slurp($file);
-    unshift @entire_file, ""; # make line numbers match up to avoid +/- 1 games
-
-    for my $line (0 .. $#entire_file) {
-        # XXX: this will incorrectly match all kinds of things that aren't pod
-        # lines...  I need a much better strategy.
-        if( $entire_file[$line] =~ m/L<[^<>|]+\|[^<>|:]+:[^:<>]+>/ ) {
-            push @{$errata->{$line}}, "L<text|scheme:...> is invalid according to perlpod";
-            $ok = 0;
-        }
-    }
 
     return $ok;
 }
@@ -127,7 +132,7 @@ sub pod_file_ok {
         return;
     }
 
-    my $checker = Pod::Simple->new;
+    my $checker = Test::Pod::_parser->new;
 
     $checker->output_string( \my $trash ); # Ignore any output
     $checker->parse_file( $file );
