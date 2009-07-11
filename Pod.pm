@@ -2,16 +2,44 @@ package Test::Pod::_parser;
 use base 'Pod::Simple';
 use strict;
 
+open our $debug, ">", "notes.txt";
+
 sub _handle_element_start {
     my($parser, $element_name, $attr_hash_r) = @_;
+    my $line = $parser->line_count -2;
+
+    # Curiously, Pod::Simple supports L<text|scheme:...> rather well.
+    if( $element_name eq "L" ) {
+        print $debug "<$element_name href='$attr_hash_r->{to}' type='$attr_hash_r->{type}'> ($line)\n" if $debug;
+
+      # if( $attr_hash_r->{type} eq "url" ) {
+      #     $parser->whine($parser->line_count(), "L<text|scheme:...> is invalid according to perlpod");
+      # }
+    }
+     
+    else {
+        print $debug "<$element_name> ($line)\n" if $debug;
+    }
 
     return $parser->SUPER::_handle_element_start(@_);
 }
 
 sub _handle_element_end {
     my($parser, $element_name) = @_;
+    my $line = $parser->line_count -2;
+
+    print $debug "</$element_name> ($line)\n" if $debug;
 
     return $parser->SUPER::_handle_element_end(@_);
+}
+
+sub _handle_text {
+    my($parser, $text) = @_;
+    my $line = $parser->line_count -2;
+
+    print $debug "$text ($line)\n" if $debug;
+
+    return $parser->SUPER::_handle_text(@_);
 }
 
 1;
