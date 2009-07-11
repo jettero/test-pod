@@ -1,6 +1,7 @@
 package Test::Pod;
 
 use strict;
+use File::Slurp ();
 
 =head1 NAME
 
@@ -83,6 +84,23 @@ sub import {
     $Test->plan(@_);
 }
 
+sub _additional_test_pod_specific_checks {
+    my ($ok, $errata, $file) = @_;
+    my @entire_file = File::Slurp::slurp($file);
+    unshift @entire_file, ""; # make line numbers match up to avoid +/- 1 games
+
+    for my $line (0 .. $#entire_file) {
+        # XXX: this will incorrectly match all kinds of things that aren't pod
+        # lines...  I need a much better strategy.
+        if( $entire_file[$line] =~ m/L<[^<>|]+\|[^<>|:]+:[^:<>]+>/ ) {
+            push @{$errata->{$line}}, "L<text|scheme:...> is invalid according to perlpod";
+            $ok = 0;
+        }
+    }
+
+    return $ok;
+}
+
 =head1 FUNCTIONS
 
 =head2 pod_file_ok( FILENAME[, TESTNAME ] )
@@ -115,6 +133,8 @@ sub pod_file_ok {
     $checker->parse_file( $file );
 
     my $ok = !$checker->any_errata_seen;
+       $ok = _additional_test_pod_specific_checks( $ok, ($checker->{errata}||={}), $file );
+
     $Test->ok( $ok, $name );
     if ( !$ok ) {
         my $lines = $checker->{errata};

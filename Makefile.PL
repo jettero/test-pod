@@ -9,6 +9,7 @@ WriteMakefile (
         'Test::More'            => '0.62',
         'Test::Builder::Tester' => '1.02',
         'File::Spec'            => 0,
+        'File::Slurp'           => 0,
     },
     clean => { FILES => 'Test-Pod-*' },
 );
