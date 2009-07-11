@@ -8,12 +8,12 @@ Test::Pod - check for POD errors in files
 
 =head1 VERSION
 
-Version 1.26
+Version 1.29_01
 
 =cut
 
 use vars qw( $VERSION );
-$VERSION = '1.26';
+$VERSION = '1.29_01';
 
 =head1 SYNOPSIS
 
@@ -62,7 +62,7 @@ C<Pod::Simple> to do the heavy lifting.
 
 =cut
 
-use 5.004;
+use 5.008;
 
 use Pod::Simple;
 use Test::Builder;
@@ -130,13 +130,14 @@ sub pod_file_ok {
 =head2 all_pod_files_ok( [@files/@directories] )
 
 Checks all the files in C<@files> for valid POD.  It runs
-L<all_pod_files()> on each file/directory, and calls the C<plan()> function for you
-(one test for each function), so you can't have already called C<plan>.
+L<all_pod_files()> on each file/directory, and calls the C<plan()>
+function for you (one test for each function), so you can't have
+already called C<plan>.
 
-If C<@files> is empty or not passed, the function finds all POD files in
-the F<blib> directory if it exists, or the F<lib> directory if not.
-A POD file is one that ends with F<.pod>, F<.pl> and F<.pm>, or any file
-where the first line looks like a shebang line.
+If C<@files> is empty or not passed, the function finds all POD
+files in the F<blib> directory if it exists, or the F<lib> directory
+if not.  A POD file is one that ends with F<.pod>, F<.pl> and F<.pm>,
+or any file where the first line looks like a shebang line.
 
 If you're testing a module, just make a F<t/pod.t>:
 
@@ -260,10 +261,10 @@ for contributions and to C<brian d foy> for the original code.
 
 =head1 COPYRIGHT
 
-Copyright 2006, Andy Lester, All Rights Reserved.
+Copyright 2006-2009, Andy Lester, All Rights Reserved.
 
-You may use, modify, and distribute this package under the
-same terms as Perl itself.
+You may use, modify, and distribute this package under the terms
+as the Artistic License v2.0 or GNU Public License v2.0.
 
 =cut
 
