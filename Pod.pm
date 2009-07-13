@@ -106,6 +106,19 @@ use 5.008;
 use Test::Builder;
 use File::Spec;
 
+our %ignore_dirs = (
+    '.bzr' => 'Bazaar',
+    '.git' => 'Git',
+    '.hg'  => 'Mercurial',
+    '.pc'  => 'quilt',
+    '.svn' => 'Subversion',
+    CVS    => 'CVS',
+    RCS    => 'RCS',
+    SCCS   => 'SCCS',
+    _darcs => 'darcs',
+    _sgbak => 'Vault/Fortress',
+);
+
 my $Test = Test::Builder->new;
 
 sub import {
@@ -210,9 +223,11 @@ sub all_pod_files_ok {
 
 =head2 all_pod_files( [@dirs] )
 
-Returns a list of all the Perl files in I<$dir> and in directories below.
-If no directories are passed, it defaults to F<blib> if F<blib> exists,
-or else F<lib> if not.  Skips any files in CVS or .svn directories.
+Returns a list of all the Perl files in I<$dir> and in directories
+below.  If no directories are passed, it defaults to F<blib> if
+F<blib> exists, or else F<lib> if not.  Skips any files in CVS,
+.svn, .git and similar directories.  See C<%Test::Pod::ignore_dirs>
+for a list of them.
 
 A Perl file is:
 
@@ -242,7 +257,7 @@ sub all_pod_files {
             closedir DH;
 
             @newfiles = File::Spec->no_upwards( @newfiles );
-            @newfiles = grep { $_ ne "CVS" && $_ ne ".svn" } @newfiles;
+            @newfiles = grep { not exists $ignore_dirs{ $_ } } @newfiles;
 
             foreach my $newfile (@newfiles) {
                 my $filename = File::Spec->catfile( $file, $newfile );
@@ -270,7 +285,7 @@ sub _is_perl {
     my $file = shift;
 
     return 1 if $file =~ /\.PL$/;
-    return 1 if $file =~ /\.p(l|m|od)$/;
+    return 1 if $file =~ /\.p(?:l|m|od)$/;
     return 1 if $file =~ /\.t$/;
 
     local *FH;

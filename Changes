@@ -8,6 +8,20 @@ NEXT
     Test::Pod now complains about the illegal construct L<text|url>.
     Thanks to Paul Miller.
 
+    The list of directories to exclude is now much longer, and is
+    available in %Test::Pod::ignore_dirs.  This list is right now:
+
+        '.bzr' => 'Bazaar',
+        '.git' => 'Git',
+        '.hg'  => 'Mercurial',
+        '.pc'  => 'quilt',
+        '.svn' => 'Subversion',
+        CVS    => 'CVS',
+        RCS    => 'RCS',
+        SCCS   => 'SCCS',
+        _darcs => 'darcs',
+        _sgbak => 'Vault/Fortress',
+
 
 1.26 - Wed Jul 19 09:54:48 CDT 2006
 
