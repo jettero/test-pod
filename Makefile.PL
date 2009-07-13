@@ -5,7 +5,7 @@ WriteMakefile (
     'NAME'           => 'Test::Pod',
     'VERSION_FROM'   => 'Pod.pm',
     'PREREQ_PM'      => {
-        'Pod::Simple'           => '2.04',
+        'Pod::Simple'           => '3.07', # required for t/a-href-L.t apparently
         'Test::More'            => '0.62',
         'Test::Builder::Tester' => '1.02',
         'File::Spec'            => 0,
