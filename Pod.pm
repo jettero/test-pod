@@ -301,7 +301,8 @@ Originally by brian d foy.
 =head1 ACKNOWLEDGEMENTS
 
 Thanks to
-David Wheeler
+David Wheeler,
+Paul Miller
 and
 Peter Edwards
 for contributions and to C<brian d foy> for the original code.
