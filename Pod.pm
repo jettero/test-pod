@@ -288,10 +288,9 @@ sub _is_perl {
     return 1 if $file =~ /\.p(?:l|m|od)$/;
     return 1 if $file =~ /\.t$/;
 
-    local *FH;
-    open FH, $file or return;
-    my $first = <FH>;
-    close FH;
+    open my $fh, '<', $file or return;
+    my $first = <$fh>;
+    close $fh;
 
     return 1 if defined $first && ($first =~ /^#!.*perl/);
 
