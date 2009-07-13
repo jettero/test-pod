@@ -1,6 +1,6 @@
 Changes
-MANIFEST
 Makefile.PL
+MANIFEST
 Pod.pm
 
 t/00-load.t
@@ -11,6 +11,8 @@ t/empty-file.pod
 t/good.t
 t/item-ordering.pod
 t/item-ordering.t
+t/link.pod
+t/link.t
 t/load.t
 t/missing-file.t
 t/pod.t
@@ -23,7 +25,3 @@ t/spaced-directives.pod
 t/spaced-directives.t
 t/unknown-directive.pod
 t/unknown-directive.t
-t/a-href-L.pod
-t/a-href-L.t
-
-META.yml                                 Module meta-data (added by MakeMaker)

@@ -10,7 +10,7 @@ Copyright 2009, Paul Miller C<< <jettero@cpan.org> >>
 
 ... test text, please ignore
 
-Invalid according to L<perlpod/Formatting Codes>: 
+Invalid according to L<perlpod/Formatting Codes>:
 L<Paul's Perl Modules|http://voltar.org/perl>
 
 This should be OK:
