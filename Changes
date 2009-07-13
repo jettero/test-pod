@@ -1,6 +1,6 @@
 Change log for Test::Pod
 
-NEXT
+1.40 - Sun Jul 12 23:32:11 CDT 2009
     [THINGS THAT MAY BREAK YOUR CODE]
     Test::Pod now requires Perl 5.8.0.
 
