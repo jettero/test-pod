@@ -23,4 +23,7 @@ t/spaced-directives.pod
 t/spaced-directives.t
 t/unknown-directive.pod
 t/unknown-directive.t
+t/a-href-L.pod
+t/a-href-L.t
+
 META.yml                                 Module meta-data (added by MakeMaker)
